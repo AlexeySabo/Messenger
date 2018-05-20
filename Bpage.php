@@ -29,7 +29,7 @@
 </html>
 
 <?php
-//
+
 require_once("connect.php");
 
     $query = "INSERT INTO news VALUES (NULL, :name, NOW())";

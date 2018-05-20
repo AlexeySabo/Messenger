@@ -38,6 +38,4 @@ require_once("connect.php");
         $news->execute(['name' => $_POST['name']]);
     }
 
-    //
-
 ?>

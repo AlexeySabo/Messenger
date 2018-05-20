@@ -101,7 +101,7 @@
         }
 
 
-
+//
 
      /*   $query2 = "UPDATE Users SET Login = :Login, Password = :Password, Avatar = :Avatar, File = :File WHERE User_id = $uid";
         $names2 = $pdo->prepare($query2);

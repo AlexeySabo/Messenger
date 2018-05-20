@@ -60,4 +60,5 @@ require_once("connect.php");
 } catch (PDOException $e) {
     echo "Ошибка выполнения запроса: " . $e->getMessage();
 }*/
+
 ?>
