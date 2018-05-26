@@ -34,15 +34,21 @@
     </form>
 
     <?php
-    $query = "INSERT INTO Users VALUES (NULL, :Login, :Password, :Avatar)";
+    $query = "INSERT INTO Users VALUES (default, :Login, :Password, :Avatar)";
     $names = $pdo->prepare($query);
-    $names->execute(['Login' => $_POST['Login'], 'Password' => $_POST['Password'], 'Avatar' => ($_FILES['Avatar']['name'])]);
 
-    @copy($_FILES['Avatar']['tmp_name'], $_FILES['Avatar']['name']);
+    $names->execute(['Login' => $_POST['Login'], 'Password' => $_POST['Password'], 'Avatar' => md5($_FILES['Avatar']['name'])]);
 
     $query = "SELECT * FROM Users";
     $names = $pdo->query($query);
+    while ($catalog = $names->fetch()) {
+        $uid=$catalog[ 'User_id' ];
+    }
 
+    @copy ( $_FILES[ 'Avatar' ][ 'tmp_name' ] , ( 'Avatars\\' . $uid . md5($_FILES[ 'Avatar' ][ 'name' ] ) ));
+
+    $query = "SELECT * FROM Users";
+    $names = $pdo->query($query);
     ?>
 
 </table>
@@ -96,8 +102,8 @@
         if (!empty($_FILES['Avatar'.$uid]['name'])) {
             $query = "UPDATE Users SET Avatar = :Avatar WHERE User_id = $uid";
             $names = $pdo->prepare($query);
-            $names->execute(['Avatar' => ($_FILES['Avatar'.$uid]['name'])]);
-            @copy(($_FILES['Avatar'.$uid]['tmp_name']), ('Avatars\\'.$uid.$_FILES['Avatar'.$uid]['name']));
+            $names->execute(['Avatar' => md5($_FILES['Avatar'.$uid]['name'])]);
+            @copy(($_FILES['Avatar'.$uid]['tmp_name']), ('Avatars\\'.$uid.md5($_FILES['Avatar'.$uid]['name'])));
         }
 
 
